@@ -5,6 +5,7 @@ namespace App\Services\Order;
 use App\DTOs\OrderDraft;
 use App\Exceptions\ProductNotFoundException;
 use App\Exceptions\StockException;
+use App\Jobs\SendNewOrderNotification;
 use App\Models\CampaignApplication;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -129,6 +130,7 @@ class CreateOrderService implements CreateOrderServiceInterface
             }
 
             DB::commit();
+            SendNewOrderNotification::dispatch($order->id);
 
             return $order;
         } catch (\Exception $exception) {
