@@ -45,3 +45,5 @@ php artisan db:seed (Var olan json dosyalarının içerisindeki fataları seed e
 EP testleri için Postman collection
 https://web.postman.co/workspace/My-Workspace~e382add4-fc8b-43e8-8f4d-0da468575ba4/collection/14745227-a8742590-0c5d-401e-805f-c54866a83a2f?action=share&source=copy-link&creator=14745227
 
+Temsili notificationı çalıştırmak için 
+php artisan queue:work 
