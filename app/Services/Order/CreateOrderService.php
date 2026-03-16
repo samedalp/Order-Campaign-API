@@ -2,6 +2,7 @@
 
 namespace App\Services\Order;
 
+use App\Const\ErrorConstants;
 use App\DTOs\OrderDraft;
 use App\Exceptions\ProductNotFoundException;
 use App\Exceptions\StockException;
@@ -214,11 +215,10 @@ class CreateOrderService implements CreateOrderServiceInterface
             DB::rollBack();
         }
 
-        if (
-            $exception instanceof \App\Exceptions\ProductNotFoundException ||
-            $exception instanceof \App\Exceptions\StockException
-        ) {
-            throw new $exception;
+        foreach (ErrorConstants::PASSTHROUGH_EXCEPTIONS as $exceptionClass) {
+            if ($exception instanceof $exceptionClass) {
+                throw $exception;
+            }
         }
 
         throw new \Exception(
