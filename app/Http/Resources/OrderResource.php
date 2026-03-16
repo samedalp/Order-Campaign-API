@@ -22,6 +22,13 @@ class OrderResource extends JsonResource
             'discount_total' => $this->discount_total,
             'shipping_total' => $this->shipping_total,
             'grand_total' => $this->grand_total,
+            'used_campaign' => $this->campaignApplication ? [
+                'code' => $this->campaignApplication->campaign_code,
+                'name' => $this->campaignApplication->campaign_name,
+                'type' => $this->campaignApplication->campaign_type,
+                'discount_amount' => $this->campaignApplication->discount_amount,
+                'meta' => $this->campaignApplication->meta,
+            ] : null,
         ];
     }
 }

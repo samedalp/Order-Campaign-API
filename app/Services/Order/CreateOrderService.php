@@ -2,6 +2,7 @@
 
 namespace App\Services\Order;
 
+use App\Helpers\CampaignPresenters;
 use App\Helpers\ErrorHandlerHelper;
 use App\DTOs\OrderDraft;
 use App\Exceptions\ProductNotFoundException;
@@ -85,12 +86,7 @@ class CreateOrderService implements CreateOrderServiceInterface
                 subtotal: round($subtotal, 2),
             );
 
-            $campaigns = [
-                new OrderTotalPercentageCampaign(100, 5),
-                new CategoryPercentageCampaign(2, 10),
-                new QuantityBasedCampaign(1, 2, 1, 1),
-            ];
-
+            $campaigns = CampaignPresenters::getCampaigns();
             $campaignResult = $this->campaignService->getBestCampaign($draft, $campaigns);
 
             $discountTotal = $campaignResult?->discountAmount ?? 0.0;
