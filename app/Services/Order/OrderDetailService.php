@@ -3,6 +3,7 @@
 namespace App\Services\Order;
 
 use App\Exceptions\OrderNotFoundException;
+use App\Helpers\ErrorHandlerHelper;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class OrderDetailService implements OrderDetailServiceInterface
 {
+    use ErrorHandlerHelper;
     /**
      * @throws \Exception
      */
@@ -22,7 +24,8 @@ class OrderDetailService implements OrderDetailServiceInterface
                 fn () => $this->findOrderOrFail($orderNumber)
             );
         } catch (\Exception $e) {
-            if ($e instanceof OrderNotFoundException) {
+
+            if ($this->isDefinedException($e)) {
                 throw $e;
             }
 

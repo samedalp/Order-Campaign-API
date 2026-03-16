@@ -2,7 +2,7 @@
 
 namespace App\Services\Order;
 
-use App\Const\ErrorConstants;
+use App\Helpers\ErrorHandlerHelper;
 use App\DTOs\OrderDraft;
 use App\Exceptions\ProductNotFoundException;
 use App\Exceptions\StockException;
@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Log;
 
 class CreateOrderService implements CreateOrderServiceInterface
 {
+
+    use ErrorHandlerHelper;
     public function __construct(
         private readonly CampaignServiceInterface      $campaignService,
         private readonly ShippingCalculatorInterface   $shippingCalculator,
@@ -215,10 +217,8 @@ class CreateOrderService implements CreateOrderServiceInterface
             DB::rollBack();
         }
 
-        foreach (ErrorConstants::PASSTHROUGH_EXCEPTIONS as $exceptionClass) {
-            if ($exception instanceof $exceptionClass) {
-                throw $exception;
-            }
+        if ($this->isDefinedException($exception)) {
+            throw $exception;
         }
 
         throw new \Exception(
