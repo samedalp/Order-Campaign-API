@@ -29,8 +29,11 @@ Sipariş toplamı belirli bir tutarı geçtiğinde indirim uygulanır.<br>
 Örnek:
 
 100 TL üzeri siparişlere %5 indirim
-Kargo Kuralları
+
+**Kargo Kuralları**
+
 50 TL ve üzeri siparişlerde kargo ücretsiz
+
 50 TL altı siparişlerde 10 TL kargo ücreti
 
 <br>
